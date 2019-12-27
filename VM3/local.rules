@@ -1,0 +1,6 @@
+drop icmp any any -> $HOME_NET any (msg:"ICMP test detected"; GID:1; sid:10000001; rev:001; classtype:icmp-event;)
+#alert tcp any any -> $HOME_NET any (msg:"TCP detected"; GID:1; sid: 10000005; rev:001;)
+drop tcp any any -> $HOME_NET any (flags: !PAU; content: "uname"; msg: "Urgent exploit"; GID: 1; sid: 10000002; rev: 001;)
+drop tcp any any -> $HOME_NET any (content: "uname -r"; msg: "Possible botnet command"; GID: 1; sid: 10000003; rev:001;)
+drop tcp any any -> $HOME_NET any (msg: "Possible Flood"; GID: 1; sid: 10000004; rev:001; flow: stateless; detection_filter: track by_src, count 70, seconds 10;)
+drop tcp any any -> $HOME_NET any (flags: PAU; msg: "exlpoit"; GID: 1; sid: 10000006; rev: 001;)
